@@ -1,0 +1,27 @@
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:100%;
+    :global {
+        h1{
+            text-align: center;
+        }
+        .login-form {
+            width: 400px;
+            height: 300px;
+        }
+
+        .login-form-forgot {
+            float: right;
+        }
+
+        .ant-col-rtl .login-form-forgot {
+            float: left;
+        }
+
+        .login-form-button {
+            width: 100%;
+        }
+    }
+}

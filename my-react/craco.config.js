@@ -20,11 +20,18 @@ module.exports = {
   webpack: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@pages/": path.resolve(__dirname, "./src/pages"),
+      "@pages": path.resolve(__dirname, "./src/pages"),
     },
   },
   devServer: {
     port: 8086, //更改端口号
     // host: 也可以修改host
+    // 增加代理
+    proxy: {
+      "/auth": {
+        target: "http://139.198.34.216:8230/admin",
+        changeOrigin: true, //允许跨域
+      },
+    },
   },
 };

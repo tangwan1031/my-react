@@ -1,14 +1,11 @@
 import {Button} from "antd";
+import RenderRouter from "./routes";
 import "@/App.less";
-const App: React.FC = () => (
-  <>
-    <Button type="primary">Primary Button</Button>
-    <Button>Default Button</Button>
-    <Button type="dashed">Dashed Button</Button>
-    <br />
-    <Button type="text">Text Button</Button>
-    <Button type="link">Link Button</Button>
-  </>
-);
+import { ReactElement } from "react";
+const App: React.FC = () => {
+    return RenderRouter();
+}
+    
+
 
 export default App;

@@ -1,0 +1,12 @@
+.index {
+    // 只允许通过xxx.title
+    .title{
+        color:pink;
+    }
+    :global{
+        // 可以直接作为className
+        .title{
+            color:green;
+        }
+    }
+}
