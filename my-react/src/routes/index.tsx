@@ -1,67 +1,96 @@
-import { Outlet, useRoutes,Navigate } from "react-router-dom";
-import { lazy,ReactElement,Suspense } from "react";
+import { useRoutes,Outlet,Navigate,RouteObject} from "react-router-dom";
+import React, { lazy, ReactElement, Suspense } from "react";
 import Loading from "@/components/Loading";
 import AuthComponent from "@/components/authComponent";
 import Index from "@/pages/Index";
-const lazyLoad = (path:string):ReactElement =>{
+import {
+    DesktopOutlined,
+    FileOutlined,
+    PieChartOutlined,
+    TeamOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
+const lazyLoad = (path: string):ReactElement => {
     const Comp = lazy(()=>import("@/pages/"+path))
     return (
         <Suspense fallback={<Loading/>}>
-        <Comp/>
+            <Comp/>    
         </Suspense>
     )
 }
-export default function RenderRouter():ReactElement{
-    return useRoutes([
-        {
-            path:"/",
-            element:<AuthComponent><Index/></AuthComponent>,
-            children:[
-                {
-                    path:'/',
-                    element:lazyLoad("home")
-                },
-                {
-                    //数据管理
-                    path:"/cmn",
-                    element:<Outlet/>,
-                    children:[
-                        {
-                            index:true,
-                            element:<Navigate to="/cmn/dict"/>
-                        },
-                        {
-                            // 数据字典
-                            path:"/cmn/dict",
-                            element:lazyLoad("cmn/dict")
-                        }
-                    ]
-                },
-                {
-                    //医院管理
-                    path:"/hospital",
-                    element:<Outlet/>,
-                    children:[
-                        {
-                            index:true,
-                            element:<Navigate to="/hospital/hospitalSet"/>
-                        },
-                        {
-                            //医院设置
-                            path:"/hospital/hospitalSet",
-                            element:lazyLoad("hospital/hospitalSet"),
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            path:"/Login",
-            element:lazyLoad("Login")
-        },
-        {
-            path:"*",
-            element:lazyLoad("NotFound")
-        },
-    ]) as ReactElement
+interface IRoutes extends RouteObject {
+    title?:string,
+    children?:IRoutes[],
+    icon?:React.ReactElement
+}
+export type TRoutes = IRoutes[];
+const routes:TRoutes = [
+    {
+        path: "/",
+        element: <AuthComponent><Index/></AuthComponent>,
+        children:[    
+            {
+                title:"首页",
+                path:"/",
+                icon:<PieChartOutlined />,
+                element:lazyLoad("home")
+
+            },      
+            {
+                 // 数据管理
+                path:"/cmn",
+                title:"数据管理",
+                icon:<UserOutlined />,
+                element:<Outlet/>,
+                children:[
+                    {
+                        index:true,
+                        element:<Navigate to="/cmn/dict"/>
+                    },
+                    {
+                        // 数据字典
+                        path:"/cmn/dict",
+                        title:"数据字典",
+                        element:lazyLoad("cmn/dict")
+                    }
+                ]
+            },                
+            {
+                // 医院管理
+                title:"医院管理",
+                path:"/hospital",
+                icon:<UserOutlined />,
+                element:<Outlet/>,
+                children:[
+                    {
+                        index:true,
+                        element:<Navigate to="/hospital/hospitalSet"/>
+                    },
+                    {
+                        // 医院设置
+                        title:"医院设置",
+                        path:"/hospital/hospitalSet",
+                        element:lazyLoad("hospital/hospitalSet"),
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        path: "/Login",
+        element: lazyLoad("Login")
+    },
+    {
+        path: "*",
+        element: lazyLoad("NotFound")
+    }
+]
+//  侧边栏需要的路由信息
+export function findSiderRouter(){
+    const info:any = routes.find(v=>v.path === "/");
+    return info.children
+}
+// 整体的路由配置信息
+export default function RenderRouter(): ReactElement {
+    return useRoutes(routes) as ReactElement;
 }
