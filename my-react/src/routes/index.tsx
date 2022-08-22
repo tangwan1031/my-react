@@ -18,7 +18,7 @@ const lazyLoad = (path: string):ReactElement => {
         </Suspense>
     )
 }
-interface IRoutes extends RouteObject {
+export interface IRoutes extends RouteObject {
     title?:string,
     children?:IRoutes[],
     icon?:React.ReactElement
@@ -86,9 +86,9 @@ const routes:TRoutes = [
     }
 ]
 //  侧边栏需要的路由信息
-export function findSiderRouter(){
-    const info:any = routes.find(v=>v.path === "/");
-    return info.children
+export function findSiderRouter():IRoutes[]{
+    const info:any = routes.find(v=>v.path === "/") as IRoutes;
+    return info.children as IRoutes[];
 }
 // 整体的路由配置信息
 export default function RenderRouter(): ReactElement {

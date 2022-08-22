@@ -1,6 +1,7 @@
 import { getAdminInfo, postLogin } from "@/api/auth";
 import { createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
+import { useSelector } from "react-redux";
 
 const initialState = {
     token:localStorage.getItem("token"),
@@ -41,4 +42,6 @@ export const getInfoAsync = ()=>{
     }
 }
 export const authSelector = (state:any) => state.auth;
+// 获取auth相关的数据状态
+export const useAuthState = ()=>useSelector(authSelector);
 export default authSlice.reducer;
