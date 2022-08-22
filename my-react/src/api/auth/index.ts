@@ -14,3 +14,5 @@ export const postLogin = function(authInfo:TauthInfo){
 export const getAdminInfo = function(){
     return authRequest.get("/index/info");
 }
+
+
