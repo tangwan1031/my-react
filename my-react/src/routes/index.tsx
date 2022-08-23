@@ -4,11 +4,9 @@ import Loading from "@/components/Loading";
 import AuthComponent from "@/components/authComponent";
 import Index from "@/pages/Index";
 import {
-    DesktopOutlined,
-    FileOutlined,
-    PieChartOutlined,
-    TeamOutlined,
-    UserOutlined,
+    HomeOutlined,
+    MedicineBoxOutlined,
+    DatabaseOutlined
 } from '@ant-design/icons';
 const lazyLoad = (path: string):ReactElement => {
     const Comp = lazy(()=>import("@/pages/"+path))
@@ -32,7 +30,7 @@ const routes:TRoutes = [
             {
                 title:"首页",
                 path:"/",
-                icon:<PieChartOutlined />,
+                icon:<HomeOutlined />,
                 element:lazyLoad("home")
 
             },      
@@ -40,7 +38,7 @@ const routes:TRoutes = [
                  // 数据管理
                 path:"/cmn",
                 title:"数据管理",
-                icon:<UserOutlined />,
+                icon:<DatabaseOutlined />,
                 element:<Outlet/>,
                 children:[
                     {
@@ -59,7 +57,7 @@ const routes:TRoutes = [
                 // 医院管理
                 title:"医院管理",
                 path:"/hospital",
-                icon:<UserOutlined />,
+                icon:<MedicineBoxOutlined />,
                 element:<Outlet/>,
                 children:[
                     {
